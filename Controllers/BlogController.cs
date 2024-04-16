@@ -17,6 +17,6 @@ public class BlogController : ControllerBase
     [Route("/list")]
     public IActionResult ListBlog()
     {
-        return Ok("");
+        return Ok("Test");
     }
 }
