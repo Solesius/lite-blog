@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row" style="padding-top: 180px;">
+    <div class="col-md-6 mb-2" *ngFor="let blog of blogs">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{blog.title}}</h5>
+          <p class="card-text">{{blog.summary}}</p>
+          <a href="javascript:void(0)" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

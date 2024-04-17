@@ -7,28 +7,30 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { NgxWigModule } from 'ngx-wig';
+import { AboutComponent } from './about/about.component';
+import { BlogListComponent } from './blog-list/blog-list.component';
+import { BlogService } from './shared/service/blog.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    AboutComponent,
+    BlogListComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule,
     HttpClientModule,
     FormsModule,
+    NgxWigModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
+      { path: 'about-me', component: AboutComponent },
+    ]),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [BlogService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

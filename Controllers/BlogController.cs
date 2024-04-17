@@ -1,22 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using kw.liteblog.Database;
+using kw.liteblog.Models;
+using kw.liteblog.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace net.Controllers;
 
 [ApiController]
 [Route("api/blog")]
-public class BlogController : ControllerBase
+public class BlogController(ILogger<BlogController> logger) : ControllerBase
 {
-    private readonly ILogger<BlogController> _logger;
+    private readonly ILogger<BlogController> _logger = logger;
+    private readonly IBlogService _blogService = new BlogService(new BlogExtractor("Data Source=app.db"));
 
-    public BlogController(ILogger<BlogController> logger)
+    [HttpGet]
+    [Route("{id}")]
+    public IActionResult GetBlog([FromRoute]int id)
     {
-        _logger = logger;
+        _logger.LogInformation("Fetching blog: {0}",id);
+        return Ok(_blogService.GetBlog(id));
     }
 
     [HttpGet]
     [Route("/list")]
-    public IActionResult ListBlog()
+    public IActionResult ListBlogs()
     {
-        return Ok("Test");
+        return Ok(new List<Blog>{});
     }
 }
