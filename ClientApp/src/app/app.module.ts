@@ -11,6 +11,8 @@ import { NgxWigModule } from 'ngx-wig';
 import { AboutComponent } from './about/about.component';
 import { BlogListComponent } from './blog-list/blog-list.component';
 import { BlogService } from './shared/service/blog.service';
+import { BlogAdministrationComponent } from './blog-admin/blog-admin.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -19,15 +21,18 @@ import { BlogService } from './shared/service/blog.service';
     HomeComponent,
     AboutComponent,
     BlogListComponent,
+    BlogAdministrationComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     HttpClientModule,
     FormsModule,
     NgxWigModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'about-me', component: AboutComponent },
+      { path: 'admin', component: BlogAdministrationComponent },
     ]),
   ],
   providers: [BlogService],

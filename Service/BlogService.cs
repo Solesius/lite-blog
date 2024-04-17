@@ -10,4 +10,8 @@ public class BlogService(IDataExtractor<Blog,int> blogExtractor) : IBlogService
     {
         return _blogExtractor.ExtractOne(blogId);
     }
+    public List<Blog> GetBlogs()
+    {
+        return _blogExtractor.ExtractMany();    
+    }
 }

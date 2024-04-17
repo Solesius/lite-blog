@@ -1,11 +1,22 @@
-<div class="container">
-  <div class="row" style="padding-top: 180px;">
-    <div class="col-md-6 mb-2" *ngFor="let blog of blogs">
-      <div class="card">
+<div class="">
+  <div class="row justify-content-left text-start" style="padding-top: 90px;">
+    <div class="col-6">
+      <h3>Blog Posts</h3>
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center mt-1 " style="overflow-y: scroll;max-height: 750px;border-top: 1px solid lightgray">
+    <div class="col-md-8 p-4 m-1" *ngFor="let blog of blogs">
+      <div class="card row d-flex text-start bg-dark bg-gradient text-light">
         <div class="card-body">
-          <h5 class="card-title">{{blog.title}}</h5>
+          <div class="row card-title">
+            <div class="col-12 text-start">
+              <h3 class="card-title">{{blog.title}}</h3>
+              <h6>{{blog.author }}</h6>
+              <h6>{{blog.postDate | date:'fullDate'}}</h6>
+            </div>
+          </div>
           <p class="card-text">{{blog.summary}}</p>
-          <a href="javascript:void(0)" class="btn btn-primary">Read More</a>
+          <a href="javascript:void(0)" class="btn btn-dark btn-gradient">Read More</a>
         </div>
       </div>
     </div>

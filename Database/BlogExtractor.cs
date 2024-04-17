@@ -13,13 +13,53 @@ public class BlogExtractor : IDataExtractor<Blog, int>
 
     public List<Blog> ExtractMany()
     {
-        return new();
+        List<Blog> blogs = new();
+
+        using (var connection = new SQLiteConnection(_dbPath))
+        {
+            connection.Open();
+            string sql = @"
+                SELECT 
+                    BLOG_ID,
+                    TITLE,
+                    AUTHOR,
+                    POST_DATE,
+                    SUMMARY,
+                    BODY
+
+                FROM BLOG
+            ";
+
+            using (var command = new SQLiteCommand(connection))
+            {
+                command.CommandText = sql;
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var blog = new Blog
+                        {
+                            BlogId = reader.GetInt32(0),
+                            Title = reader.GetString(1),
+                            Author = reader.GetString(2),
+                            PostDate = DateTimeOffset.FromUnixTimeSeconds(reader.GetInt64(3)).ToLocalTime().LocalDateTime,
+                            Summary = reader.GetString(4),
+                            Body = reader.GetString(5)
+                        };
+                        blogs.Add(blog);
+                    }
+                }
+            }
+        }
+
+        return blogs;
     }
 
     public Blog? ExtractOne(int blogId)
     {
         Blog? blog = null;
-        using (var connection = new SQLiteConnection(this._dbPath))
+        using (var connection = new SQLiteConnection(_dbPath))
         {
             connection.Open();
             string sql = @"

@@ -1,0 +1,32 @@
+<div class="row col-12" style="margin-top: 90px;">
+    <h4>Blog Admin</h4>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6 text-start">
+                    <label class="form-label">Search Blogs</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-start"  style="overflow-y: scroll; max-height: 780px;">
+                    <label class="form-label">Published Blogs</label>
+                    <table class="table table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Published Date</th>
+                            <th>Edit / Delete</th>
+                        </tr>
+                        <tr *ngFor="let blog of blogs">
+                            <td>{{blog.title}}</td>
+                            <td>{{blog.postDate | date:'fullDate'}}</td>
+                            <td><button class="btn btn-dark text-dark">Edit Post</button><button class="btn btn-dark text-dark m-1">Delete Post</button></td>
+                        </tr>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

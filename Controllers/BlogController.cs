@@ -13,17 +13,17 @@ public class BlogController(ILogger<BlogController> logger) : ControllerBase
     private readonly IBlogService _blogService = new BlogService(new BlogExtractor("Data Source=app.db"));
 
     [HttpGet]
-    [Route("{id}")]
-    public IActionResult GetBlog([FromRoute]int id)
+    [Route("fetch/{id}")]
+    public IActionResult GetBlog([FromRoute] int id)
     {
-        _logger.LogInformation("Fetching blog: {0}",id);
+        _logger.LogInformation("Fetching blog: {0}", id);
         return Ok(_blogService.GetBlog(id));
     }
 
     [HttpGet]
-    [Route("/list")]
+    [Route("list")]
     public IActionResult ListBlogs()
     {
-        return Ok(new List<Blog>{});
+        return Ok(_blogService.GetBlogs());
     }
 }

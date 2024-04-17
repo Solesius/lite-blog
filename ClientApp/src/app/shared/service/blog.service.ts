@@ -9,7 +9,11 @@ export class BlogService {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {}
 
   getBlog(id : number) : Observable<Blog> {
-    return this.http.get<Blog>(this.baseUrl + "api/blog/" +id)
+    return this.http.get<Blog>(this.baseUrl + "api/blog/fetch/" +id)
+  }
+
+  getBlogs() : Observable<Array<Blog>> {
+    return this.http.get<Array<Blog>>(this.baseUrl + "api/blog/list")
   }
 
 }
