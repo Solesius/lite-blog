@@ -1,0 +1,28 @@
+<div class="row " style="margin-top: 90px;">
+
+<form [formGroup]="blogEditForm">
+    <div class="d-flex justify-content-center">
+        <div class="row p-2 bg-light bg-gradient rounded">
+            <div class="form-group col-12">
+                <label class="form-label">Title</label>
+                <input class="form-control" formControlName="title">
+            </div>
+    
+            <div class="form-group col-12 mt-4">
+                <label class="form-label">Summary</label>
+                <textarea class="form-control" formControlName="summary" style="word-wrap: break-word; white-space: wrap;" ></textarea>
+            </div>
+    
+            <div class="form-group col-12 mt-4">
+                <label class="form-label">Body</label>
+                <ngx-wig formControlName="body"></ngx-wig>
+            </div>
+            <div class="form-group col-12 mt-4 text-end">
+                <button class="btn btn-secondary me-2" (click)="backToAdmin()">Cancel</button>
+                <button class="btn btn-secondary">Save Blog</button>
+            </div>
+        </div>
+    </div>
+</form>
+    
+</div>

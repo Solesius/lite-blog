@@ -20,7 +20,8 @@
                         <tr *ngFor="let blog of blogs">
                             <td>{{blog.title}}</td>
                             <td>{{blog.postDate | date:'fullDate'}}</td>
-                            <td><button class="btn btn-dark text-dark">Edit Post</button><button class="btn btn-dark text-dark m-1">Delete Post</button></td>
+                            <td><button class="btn btn-dark text-dark" (click)="editBlog(blog.blogId)">Edit Post</button>
+                                <button class="btn btn-dark text-dark m-1">Delete Post</button></td>
                         </tr>
                         
                     </table>
