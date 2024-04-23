@@ -1,0 +1,21 @@
+<div style="padding-top: 96px;">
+  <div class="row d-flex justify-content-center mt-1" style="overflow-y: scroll;">
+    <div class="col-12 p-4" >
+      <div class="card row bg-light bg-gradient d-flex shadow" style="border-radius: 2.98px !important;">
+        <div class="card-body">
+          <div class="row card-title">
+            <div class="col-12 text-center">
+              <h3 class="card-title" style="font-weight: 200;font-size: 2.67em;">
+                {{blog.title}}
+                
+              </h3>
+              
+              <h6 class="fst-italic text-secondary">{{blog.postDate | date:'fullDate'}}</h6>
+            </div>
+          </div>
+          <div class="blog-body" [innerHTML]="blog.body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

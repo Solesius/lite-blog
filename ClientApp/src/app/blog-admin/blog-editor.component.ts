@@ -12,6 +12,7 @@ import { AdminService } from '../shared/service/admin.service';
 })
 export class BlogEditorComponent implements AfterViewInit {
   mode = 'BLOG_EDIT';
+  routeBlogId = -1;
   editBlog: any = undefined;
   routeListener: Subscription = new Subscription();
 
@@ -53,10 +54,15 @@ export class BlogEditorComponent implements AfterViewInit {
     this.router.navigate(['login']);
   }
 
-  loadBlog(blog: Blog) {
+  fillForm(blog: Blog) {
     this.blogEditForm.get('title')?.patchValue(blog.title);
     this.blogEditForm.get('summary')?.patchValue(blog.summary);
     this.blogEditForm.get('body')?.patchValue(blog.body);
+  }
+
+  saveBlog() {
+    let blog : Blog | any = {}
+
   }
 
   private setupRouterListener() {
@@ -64,18 +70,44 @@ export class BlogEditorComponent implements AfterViewInit {
       next: (routeParams) => {
         const blogId = routeParams.get('blogId');
         if (blogId) {
-          this.blogService.getBlog(Number(blogId)).subscribe({
-            next: (blog) => {
-              this.editBlog = blog ? blog : this.editBlog;
-              if (this.editBlog) {
-                this.loadBlog(this.editBlog);
-              }
-            },
-          });
+          this.routeBlogId = +blogId
+          this.detectModeParameter()
         }
       },
     });
   }
+
+  private detectModeParameter() {
+    this.route.queryParamMap.subscribe({
+      next : (queryParameters) => {
+        const modeParameter = queryParameters.get("mode")
+        if(modeParameter && modeParameter == "add") {
+          this.mode = "MODE_ADD"
+        } else {
+          this.loadBlog(this.routeBlogId)
+        }
+      } 
+    })
+  }
+
+  private loadBlog(blogId: number) {
+    this.blogService.getBlog(Number(blogId)).subscribe({
+      next: (blog) => {
+        this.editBlog = blog ? blog : this.editBlog;
+        if (this.editBlog) {
+          this.fillForm(this.editBlog);
+        }
+      },
+    });
+  }
+
+  private removeScriptTags(content : string) {
+    // Regular expression to match script tags
+    var scriptRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+    // Replace script tags with an empty string
+    var cleanedHtml = content.replace(scriptRegex, "");
+    return cleanedHtml;
+}
 
   backToAdmin() {
     this.router.navigate(['admin']);

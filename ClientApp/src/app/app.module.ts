@@ -17,6 +17,7 @@ import { BlogEditorComponent } from './blog-admin/blog-editor.component';
 import { AdminService } from './shared/service/admin.service';
 import { LoginComponent } from './blog-admin/login.component';
 import { NotFoundComponent } from './not-found-component';
+import { BlogViewComponent } from './blog-view/blog-view.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NotFoundComponent } from './not-found-component';
     HomeComponent,
     AboutComponent,
     BlogListComponent,
+    BlogViewComponent,
     BlogAdministrationComponent,
     BlogEditorComponent,
     LoginComponent,
@@ -39,6 +41,7 @@ import { NotFoundComponent } from './not-found-component';
     NgxWigModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'blog/:blogId', component: BlogViewComponent },
       { path: 'about-me', component: AboutComponent },
       { path: 'admin', component: BlogAdministrationComponent },
       { path: 'admin/blog/edit/:blogId', component: BlogEditorComponent },

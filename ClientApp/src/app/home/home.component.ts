@@ -15,13 +15,9 @@ export class HomeComponent  implements OnInit{
 
   ngOnInit(): void {
   
-
     this.blogService.getBlogs().subscribe({
       next : (blogs) => {
         this.blogs = blogs
-
-        
-        this.blogs.forEach(b => b.body = this.sanitizer.bypassSecurityTrustHtml(b.body) as any)
       }
     })
   }
