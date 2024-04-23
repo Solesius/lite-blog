@@ -4,13 +4,17 @@
       <h3>Blog Posts</h3>
     </div>
   </div>
-  <div class="row d-flex justify-content-center mt-1 " style="overflow-y: scroll;max-height: 750px;border-top: 1px solid lightgray">
+  <div class="row d-flex justify-content-center mt-1 scrollable" style="overflow-y: scroll;max-height: 750px;border-top: 1px solid lightgray">
     <div class="col-md-8 p-4 m-1" *ngFor="let blog of blogs">
-      <div class="card row d-flex text-start bg-dark bg-gradient text-light">
+      <div class="card row d-flex text-start bg-dark bg-gradient text-light shadow" style="border-radius: 3.14px !important;">
         <div class="card-body">
           <div class="row card-title">
             <div class="col-12 text-start">
-              <h3 class="card-title">{{blog.title}}</h3>
+              <h3 class="card-title">
+                {{blog.title}}
+                <div style="width: 90%;height: 2px;background-color: rgba(146, 135, 245, 0.644);" ></div>
+              </h3>
+              
               <h6>{{blog.postDate | date:'fullDate'}}</h6>
             </div>
           </div>

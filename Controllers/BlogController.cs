@@ -3,7 +3,7 @@ using kw.liteblog.Models;
 using kw.liteblog.Service;
 using Microsoft.AspNetCore.Mvc;
 
-namespace net.Controllers;
+namespace kw.liteblog.Controllers;
 
 [ApiController]
 [Route("api/blog")]

@@ -1,6 +1,6 @@
 <header>
   <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top"
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark nav-bar-gradient bg-dark box-shadow mb-3 fixed-top"
   >
     <div class="container">
       <a class="navbar-brand" [routerLink]="['/']">kw-blog</a>
@@ -25,18 +25,13 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-dark" [routerLink]="['/']">Blogs</a>
+            <a class="nav-link text-light" [routerLink]="['/']">Blogs</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/about-me']"
+            <a class="nav-link text-light" [routerLink]="['/about-me']"
               >About</a
             >
           </li>
-          <!-- <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/about-me']"
-              >Blog-Admin</a
-            >
-          </li> -->
         </ul>
       </div>
     </div>

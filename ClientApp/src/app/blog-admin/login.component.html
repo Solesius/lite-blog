@@ -1,0 +1,11 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="card p-5 bg-dark bg-gradient text-light">
+        <div class="text-center mb-4">
+            <h1 class="h3 mb-3 font-weight-normal">Blog Administration</h1>
+        </div>
+        <label for="adminKey" class="sr-only">Admin Key:</label>
+        <input type="text" id="adminKey" formControlName="adminKey" required class="form-control mb-4" placeholder="enter admin key">
+        <button class="btn btn-lg btn-dark btn-gradient btn-block" type="submit" [disabled]="!loginForm.valid">Login</button>
+    </form>
+</div>
+
