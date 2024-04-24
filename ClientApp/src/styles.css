@@ -13,3 +13,45 @@ div.scrollable {
 div.scrollable::-webkit-scrollbar {
   display: none;
 }
+
+
+.sharing-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.share-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin: 0 0.5rem;
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: #fff;
+  font-size: 1.25rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.share-btn:hover {
+  background-color: #333;
+}
+
+.share-btn .share-text {
+  display: none;
+}
+
+.fa-facebook {
+  background-color: #3b5998;
+}
+
+.fa-twitter {
+  background-color: #00aced;
+}
+
+.fa-linkedin {
+  background-color: #007bb6;
+}

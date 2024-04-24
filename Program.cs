@@ -1,7 +1,12 @@
+using kw.liteblog.Controllers.Filters;
+using Microsoft.AspNetCore.Authentication;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container and load in our Json
 builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication("Custom")
+    .AddScheme<AuthenticationSchemeOptions, SessionHandler>("Custom", options => { });
 builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
 var app = builder.Build();
@@ -17,6 +22,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthorization();
 // app.UseCors(builder =>
 // {
 //     builder.WithOrigins("*")

@@ -2,6 +2,7 @@
 using kw.liteblog.Database;
 using kw.liteblog.Models;
 using kw.liteblog.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace net.Controllers;
@@ -23,7 +24,6 @@ public class AdministrationController(
     [Route("session/create")]
     public IActionResult CreateAdminSession([FromBody] SessionRequest sessionRequest)
     {
-
         return Ok(_adminService.EstablishAdminSession(sessionRequest.Key));
     }
 
@@ -31,33 +31,15 @@ public class AdministrationController(
     [Route("session/valid")]
     public IActionResult ValidateSession([FromBody] SessionCheckRequest sessionCheckRequest)
     {
-        return Ok(ValidateSession(sessionCheckRequest.SessionId));
+        return Ok(_adminService.SessionValid(sessionCheckRequest.SessionId));
     }
 
     [HttpPost]
     [Route("password/update")]
-
+    [Authorize(AuthenticationSchemes = "Custom")]
     public IActionResult GetBlog([FromBody] PasswordUpdateRequest passwordUpdateRequest)
     {
-        if (!Request.Headers.TryGetValue("Session-Token", out var headerValues) || headerValues.Count == 0)
-        {
-            return Forbid();
-        }
-
-        var sessionId = headerValues[0];
-        if (ValidateSession(sessionId))
-        {
-            _adminService.UpdateDefaultAdminPassword(passwordUpdateRequest.ConfirmKey, passwordUpdateRequest.NewKey);
-            return Ok();
-        }
-        else
-        {
-            return Forbid();
-        }
-    }
-
-    private bool ValidateSession(string id)
-    {
-        return _adminService.SessionValid(id);
+        _adminService.UpdateDefaultAdminPassword(passwordUpdateRequest.ConfirmKey, passwordUpdateRequest.NewKey);
+        return Ok();
     }
 }

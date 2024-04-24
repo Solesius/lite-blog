@@ -62,7 +62,10 @@ export class BlogEditorComponent implements AfterViewInit {
 
   saveBlog() {
     let blog : Blog | any = {}
-
+    blog.title = this.blogEditForm.get('title')?.value
+    blog.summary =  this.blogEditForm.get('summary')?.value
+    blog.body = this.blogEditForm.get('body')?.value
+    this.adminService.createNewBlog(blog).subscribe(x => {})
   }
 
   private setupRouterListener() {

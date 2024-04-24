@@ -18,7 +18,6 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
                 SELECT 
                     BLOG_ID,
                     TITLE,
-                    AUTHOR,
                     POST_DATE,
                     SUMMARY,
                     BODY
@@ -50,7 +49,6 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
                 SELECT 
                     BLOG_ID,
                     TITLE,
-                    AUTHOR,
                     POST_DATE,
                     SUMMARY,
                     BODY
@@ -83,13 +81,11 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
             string query = @"
             INSERT INTO BLOG (
                 TITLE,
-                AUTHOR,
                 POST_DATE,
                 SUMMARY,
                 BODY
             ) VALUES (
                 :title,
-                :author,
                 strftime('%s', 'now'),
                 :summary,
                 :body
@@ -98,7 +94,6 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
             SELECT 
                 BLOG_ID,
                 TITLE,
-                AUTHOR,
                 POST_DATE,
                 SUMMARY,
                 BODY
@@ -111,7 +106,6 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
             {
                 command.CommandText = query;
                 command.Parameters.AddWithValue(":title", data.Title);
-                command.Parameters.AddWithValue(":author", data.Author);
                 command.Parameters.AddWithValue(":summary", data.Summary);
                 command.Parameters.AddWithValue(":body", data.Body);
 
@@ -135,10 +129,9 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
             {
                 BlogId = reader.GetInt32(0),
                 Title = reader.GetString(1),
-                Author = reader.GetString(2),
-                PostDate = DateTimeOffset.FromUnixTimeSeconds(reader.GetInt64(3)).ToLocalTime().LocalDateTime,
-                Summary = reader.GetString(4),
-                Body = reader.GetString(5)
+                PostDate = DateTimeOffset.FromUnixTimeSeconds(reader.GetInt64(2)).ToLocalTime().LocalDateTime,
+                Summary = reader.GetString(3),
+                Body = reader.GetString(4)
             };
 
             blogs.Add(blog);
@@ -155,10 +148,9 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
             {
                 BlogId = reader.GetInt32(0),
                 Title = reader.GetString(1),
-                Author = reader.GetString(2),
-                PostDate = DateTimeOffset.FromUnixTimeSeconds(reader.GetInt64(3)).ToLocalTime().LocalDateTime,
-                Summary = reader.GetString(4),
-                Body = reader.GetString(5)
+                PostDate = DateTimeOffset.FromUnixTimeSeconds(reader.GetInt64(2)).ToLocalTime().LocalDateTime,
+                Summary = reader.GetString(3),
+                Body = reader.GetString(4)
             };
 
             return blog;
@@ -187,7 +179,6 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
             {
                 command.CommandText = sql;
                 command.Parameters.AddWithValue(":title", blog.Title);
-                command.Parameters.AddWithValue(":author", blog.Author);
                 command.Parameters.AddWithValue(":postDate", blog.PostDate);
                 command.Parameters.AddWithValue(":summary", blog.Summary);
                 command.Parameters.AddWithValue(":body", blog.Body);

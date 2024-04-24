@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Blog } from '../models/blog.model';
 import { Observable } from 'rxjs';
 import { SessionRequest } from '../models/session-request.model';
@@ -32,7 +32,11 @@ export class AdminService {
     );
   }
 
-  getBlogs(): Observable<Array<Blog>> {
-    return this.http.get<Array<Blog>>(this.baseUrl + 'api/blog/list');
+  createNewBlog(blog: Blog) : Observable<Blog> {
+    return this.http.post<Blog>(
+      this.baseUrl + 'api/blog/create',
+      blog
+    );
   }
+
 }
