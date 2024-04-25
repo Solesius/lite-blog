@@ -23,21 +23,24 @@ public class SessionHandler(
         configuration
     );
 
+
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         var authorizationHeader = Context.Request.Headers["X-SESSION-ID"].FirstOrDefault();
-        var failTask = Task.FromResult(AuthenticateResult.Fail("Invalid Session Id"));
 
-        if (authorizationHeader is null) return failTask;
-
-        if (_adminService.SessionValid(authorizationHeader))
+        if (authorizationHeader is not null)
         {
-            var claims = new[] { new Claim("session-valid", "1") };
-            var identity = new ClaimsIdentity(claims, Scheme.Name);
-            var ticket = new AuthenticationTicket(new ClaimsPrincipal(identity), Scheme.Name);
+            if (_adminService.SessionValid(authorizationHeader))
+            {
+                var claims = new[] { new Claim("session-valid", "1") };
+                var identity = new ClaimsIdentity(claims, Scheme.Name);
+                var ticket = new AuthenticationTicket(new ClaimsPrincipal(identity), Scheme.Name);
 
-            return Task.FromResult(AuthenticateResult.Success(ticket));
+                return Task.FromResult(AuthenticateResult.Success(ticket));
+            }
+            else return Task.FromResult(AuthenticateResult.Fail("Invalid Session Id"));
+        } else {
+            return Task.FromResult(AuthenticateResult.NoResult());
         }
-        else return failTask;
     }
 }

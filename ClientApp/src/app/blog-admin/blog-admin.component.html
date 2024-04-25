@@ -8,7 +8,7 @@
                     <input type="text" class="form-control">
                 </div> -->
                 <div class="col-12 text-end">
-                    <button type="button" class="btn btn-dark text-light">New Blog +</button>
+                    <button type="button" class="btn btn-dark text-light" (click)="addBlog()">New Blog +</button>
                 </div>
             </div>
             <div class="row mt-4">
@@ -24,7 +24,7 @@
                             <td class="text-light">{{blog.title}}</td>
                             <td class="text-light">{{blog.postDate | date:'fullDate'}}</td>
                             <td ><button class="btn btn-primary text-dark" (click)="editBlog(blog.blogId)" style="background-color: white;">Edit Post</button>
-                                <button class="btn btn-primary text-dark m-1" style="background-color: white;">Delete Post</button></td>
+                                <button class="btn btn-primary text-dark m-1" (click)="deleteBlog(blog.blogId)" style="background-color: white;">Delete Post</button></td>
                         </tr>
                         
                     </table>

@@ -39,4 +39,14 @@ export class AdminService {
     );
   }
 
+  updateBlog(blog: Blog) : Observable<Blog> {
+    return this.http.post<Blog>(
+      this.baseUrl + 'api/blog/update',
+      blog
+    );
+  }
+  
+  deleteBlog(blogId: number) : Observable<void> {
+    return this.http.delete<void>( this.baseUrl + 'api/blog/delete/' + blogId );
+  }
 }

@@ -24,7 +24,7 @@
             <div class="form-group col-12  mt-4 mb-4 text-end">
                 <div>
                     <button class="btn btn-secondary me-2" (click)="backToAdmin()">Cancel</button>
-                    <button class="btn btn-secondary" (click)="saveBlog()">Save Blog</button>
+                    <button class="btn btn-secondary" (click)="mode == 'BLOG_EDIT' ? editBlog() : addBlog()">Save Blog</button>
                 </div>
             </div>
         </div>

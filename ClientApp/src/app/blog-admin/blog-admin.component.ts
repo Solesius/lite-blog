@@ -14,7 +14,7 @@ export class BlogAdministrationComponent implements OnInit {
     private blogService: BlogService,
     private adminSerivce: AdminService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     //confirm session before allowing access to admin
@@ -42,8 +42,19 @@ export class BlogAdministrationComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
+  addBlog() {
+    this.router.navigate(['admin/blog/add'], { queryParams: { mode: 'add' } });
+  }
   editBlog(blogId: number) {
     this.router.navigate(['admin/blog/edit', blogId]);
+  }
+
+  deleteBlog(blogId: number) {
+    this.adminSerivce.deleteBlog(blogId).subscribe({
+      next : () => {
+        this.loadBlogs()
+      }
+    })
   }
 
   private loadBlogs() {

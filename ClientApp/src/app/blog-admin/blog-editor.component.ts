@@ -13,7 +13,7 @@ import { AdminService } from '../shared/service/admin.service';
 export class BlogEditorComponent implements AfterViewInit {
   mode = 'BLOG_EDIT';
   routeBlogId = -1;
-  editBlog: any = undefined;
+  blog: Blog | any = undefined;
   routeListener: Subscription = new Subscription();
 
   blogEditForm: FormGroup = this.formBuilder.group({
@@ -60,22 +60,31 @@ export class BlogEditorComponent implements AfterViewInit {
     this.blogEditForm.get('body')?.patchValue(blog.body);
   }
 
-  saveBlog() {
+  addBlog() {
+    const blog = this.extractBlogFromForm();
+    this.adminService.createNewBlog(blog).subscribe(x => {this.router.navigate(['/admin',{}])})
+  }
+  
+  editBlog() {
+    const blog = this.extractBlogFromForm();
+    blog.blogId = this.blog?.blogId
+    this.adminService.updateBlog(blog).subscribe(x => {this.router.navigate(['/admin',{}])})
+  }
+
+  private extractBlogFromForm() : Blog {
     let blog : Blog | any = {}
-    blog.title = this.blogEditForm.get('title')?.value
-    blog.summary =  this.blogEditForm.get('summary')?.value
-    blog.body = this.blogEditForm.get('body')?.value
-    this.adminService.createNewBlog(blog).subscribe(x => {})
+    blog.title = this.removeScriptTags(this.blogEditForm.get('title')?.value)
+    blog.summary =  this.removeScriptTags(this.blogEditForm.get('summary')?.value)
+    blog.body = this.removeScriptTags(this.blogEditForm.get('body')?.value)
+    return blog;
   }
 
   private setupRouterListener() {
     this.routeListener = this.route.paramMap.subscribe({
       next: (routeParams) => {
         const blogId = routeParams.get('blogId');
-        if (blogId) {
-          this.routeBlogId = +blogId
-          this.detectModeParameter()
-        }
+        if (blogId) { this.routeBlogId = +blogId }
+        this.detectModeParameter()
       },
     });
   }
@@ -85,7 +94,8 @@ export class BlogEditorComponent implements AfterViewInit {
       next : (queryParameters) => {
         const modeParameter = queryParameters.get("mode")
         if(modeParameter && modeParameter == "add") {
-          this.mode = "MODE_ADD"
+          this.mode = "BLOG_ADD"
+          console.log(this.mode)
         } else {
           this.loadBlog(this.routeBlogId)
         }
@@ -96,9 +106,9 @@ export class BlogEditorComponent implements AfterViewInit {
   private loadBlog(blogId: number) {
     this.blogService.getBlog(Number(blogId)).subscribe({
       next: (blog) => {
-        this.editBlog = blog ? blog : this.editBlog;
-        if (this.editBlog) {
-          this.fillForm(this.editBlog);
+        this.blog = blog ? blog : this.blog;
+        if (this.blog) {
+          this.fillForm(this.blog);
         }
       },
     });

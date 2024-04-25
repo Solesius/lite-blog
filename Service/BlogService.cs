@@ -33,6 +33,11 @@ public partial class BlogService(IDataExtractor<Blog, int, Blog?> blogExtractor)
         return _blogExtractor.UpdateOne(blog);
     }
 
+     public void DeleteBlog(Blog blog)
+     {
+        _blogExtractor.DeleteOne(blog);
+     }
+
     private void RemoveBlogScriptTags(Blog blog)
     {
         blog.Title = ScrubHtml(blog.Title);

@@ -168,7 +168,6 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
             UPDATE BLOG
             SET
                 TITLE = :title,
-                AUTHOR = :author,
                 POST_DATE = strftime('%s', 'now'),
                 SUMMARY = :summary,
                 BODY = :body

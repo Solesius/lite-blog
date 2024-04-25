@@ -62,7 +62,7 @@ public class AdminService(
     {
         using (var rng = RandomNumberGenerator.Create())
         {
-            var data = new byte[32];
+            var data = new byte[64];
             rng.GetBytes(data);
             return Convert.ToBase64String(data);
         }
@@ -73,7 +73,7 @@ public class AdminService(
         using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(key)))
         {
             var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(value));
-            return BitConverter.ToString(hash).Replace("-", "").ToLower();
+            return BitConverter.ToString(hash).Replace("-", "");
         }
     }
 }
