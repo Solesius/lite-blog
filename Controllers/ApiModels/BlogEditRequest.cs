@@ -2,8 +2,8 @@ namespace kw.liteblog.Controllers.ApiModels;
 
 public class BlogEditRequest
 {
-    public int BlogId { get; set; }
-    public string Title { get; set; }
-    public string Summary { get; set; }
-    public string Body { get; set; }
+    public required int BlogId { get; set; }
+    public required string Title { get; set; }
+    public required string Summary { get; set; }
+    public required string Body { get; set; }
 }

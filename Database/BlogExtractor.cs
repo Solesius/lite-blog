@@ -20,9 +20,13 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
                     TITLE,
                     POST_DATE,
                     SUMMARY,
-                    BODY
+                    BODY,
+                    COALESCE(PINNED,0)
 
                 FROM BLOG
+                ORDER BY 
+					PINNED = 1 DESC, 
+					POST_DATE DESC
             ";
 
             using (var command = new SQLiteCommand(connection))
@@ -131,7 +135,8 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
                 Title = reader.GetString(1),
                 PostDate = DateTimeOffset.FromUnixTimeSeconds(reader.GetInt64(2)).ToLocalTime().LocalDateTime,
                 Summary = reader.GetString(3),
-                Body = reader.GetString(4)
+                Body = reader.GetString(4),
+                IsPinned = reader.GetInt32(5) > 0
             };
 
             blogs.Add(blog);

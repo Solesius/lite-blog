@@ -35,7 +35,7 @@ export class BlogEditorComponent implements AfterViewInit {
     if (!currentSession || currentSession == '' || currentSession == null) {
       this.logout();
     } else {
-      this.adminService.validateAdminSession(currentSession).subscribe({
+      this.adminService.validateAdminSession().subscribe({
         next: (sessionValid) => {
           if (sessionValid === true) {
             this.setupRouterListener();
@@ -118,7 +118,7 @@ export class BlogEditorComponent implements AfterViewInit {
     // Regular expression to match script tags
     var scriptRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
     // Replace script tags with an empty string
-    var cleanedHtml = content.replace(scriptRegex, "");
+    var cleanedHtml = content.replace(scriptRegex, "").trim();
     return cleanedHtml;
 }
 

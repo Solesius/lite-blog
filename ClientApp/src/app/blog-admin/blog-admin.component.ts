@@ -23,7 +23,7 @@ export class BlogAdministrationComponent implements OnInit {
       this.logout();
     } else {
       //validate the session
-      this.adminSerivce.validateAdminSession(currentSession).subscribe({
+      this.adminSerivce.validateAdminSession().subscribe({
         next: (sessionValid) => {
           if (sessionValid === true) {
             this.loadBlogs();

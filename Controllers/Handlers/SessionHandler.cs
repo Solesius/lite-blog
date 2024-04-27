@@ -3,8 +3,6 @@ using System.Text.Encodings.Web;
 using kw.liteblog.Database;
 using kw.liteblog.Service;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
 
 namespace kw.liteblog.Controllers.Filters;

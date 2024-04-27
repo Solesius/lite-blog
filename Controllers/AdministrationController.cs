@@ -29,9 +29,10 @@ public class AdministrationController(
 
     [HttpPost]
     [Route("session/valid")]
-    public IActionResult ValidateSession([FromBody] SessionCheckRequest sessionCheckRequest)
+    [Authorize(AuthenticationSchemes = "Custom")]
+    public IActionResult ValidateSession()
     {
-        return Ok(_adminService.SessionValid(sessionCheckRequest.SessionId));
+        return Ok(true);
     }
 
     [HttpPost]

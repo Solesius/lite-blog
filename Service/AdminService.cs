@@ -17,31 +17,39 @@ public class AdminService(
 
     public void UpdateDefaultAdminPassword(string oldPassword, string password)
     {
-        var pass = CreateKeyHash(password, _config["SESSION_KEY"]);
-
-        var current = _adminExtractor.ExtractOne("admin");
-        if (current is not null)
+        var encKey = _config["SESSION_KEY"];
+        if (encKey is not null)
         {
-            if (current.Key.Equals(CreateKeyHash(oldPassword, _config["SESSION_KEY"])))
+            var pass = CreateKeyHash(password, encKey);
+
+            var current = _adminExtractor.ExtractOne("admin");
+            if (current is not null)
             {
-                var update = new BlogAdmin { Key = pass };
-                _adminExtractor.UpdateOne(update);
+                if (current.Key is not null && current.Key.Equals(CreateKeyHash(oldPassword, encKey)))
+                {
+                    var update = new BlogAdmin { Key = pass };
+                    _adminExtractor.UpdateOne(update);
+                }
             }
         }
     }
 
     public AdminSession EstablishAdminSession(string password)
     {
-        var blogAdmin = _adminExtractor.ExtractOne("admin");
-        if (blogAdmin is not null)
+        var encKey = _config["SESSION_KEY"];
+        if (encKey is not null)
         {
-            var hashPass = CreateKeyHash(Encoding.UTF8.GetString(Convert.FromBase64String(password)), _config["SESSION_KEY"]);
-
-            if (blogAdmin.Key.Equals(hashPass))
+            var blogAdmin = _adminExtractor.ExtractOne("admin");
+            if (blogAdmin is not null)
             {
-                var session = new AdminSession { SessionId = GenerateSessionId() };
-                _sessionExtractor.InsertOne(session);
-                return session;
+                var hashPass = CreateKeyHash(Encoding.UTF8.GetString(Convert.FromBase64String(password)), encKey);
+
+                if (blogAdmin.Key is not null && blogAdmin.Key.Equals(hashPass))
+                {
+                    var session = new AdminSession { SessionId = GenerateSessionId() };
+                    _sessionExtractor.InsertOne(session);
+                    return session;
+                }
             }
         }
 
@@ -58,22 +66,18 @@ public class AdminService(
 
     }
 
-    private string GenerateSessionId()
+    private static string GenerateSessionId()
     {
-        using (var rng = RandomNumberGenerator.Create())
-        {
-            var data = new byte[64];
-            rng.GetBytes(data);
-            return Convert.ToBase64String(data);
-        }
+        using var rng = RandomNumberGenerator.Create();
+        var data = new byte[64];
+        rng.GetBytes(data);
+        return Convert.ToBase64String(data);
     }
 
-    private string CreateKeyHash(string value, string key)
+    private static string CreateKeyHash(string value, string key)
     {
-        using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(key)))
-        {
-            var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(value));
-            return BitConverter.ToString(hash).Replace("-", "");
-        }
+        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(key));
+        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(value));
+        return BitConverter.ToString(hash).Replace("-", "");
     }
 }

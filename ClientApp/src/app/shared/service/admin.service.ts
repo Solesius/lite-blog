@@ -22,13 +22,10 @@ export class AdminService {
     );
   }
 
-  validateAdminSession(key: string): Observable<boolean> {
-    const request: SessionCheckRequest = {
-      sessionId: key,
-    };
+  validateAdminSession(): Observable<boolean> {
     return this.http.post<boolean>(
       this.baseUrl + 'api/admin/session/valid',
-      request
+      {}
     );
   }
 
