@@ -1,26 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AdminService } from '../shared/service/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, timer } from 'rxjs';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm = this.fb.group({
     adminKey: ['', [Validators.required]],
-  });
-
-  resetForm = this.fb.group({
-    confirmKey: [new FormControl<string>(''), [Validators.required]],
-    newKey: [new FormControl<string>(''), [Validators.required]],
   });
 
   constructor(
@@ -30,17 +20,15 @@ export class LoginComponent implements OnInit {
     private adminService: AdminService
   ) {}
 
-  ngOnInit(): void {}
-
   login(): void {
     if (this.loginForm.valid) {
       this.loginForm.disable();
       this.adminService
         .getAdminSession(this.loginForm.get('adminKey')?.value || '')
         .subscribe({
-          next: (response: any) => {
-            if (response['sessionId'] != null && response['sessionId']) {
-              sessionStorage.setItem('admin-session-id', response['sessionId']);
+          next: (session) => {
+            if (session.sessionId != null && session.sessionId) {
+              sessionStorage.setItem('admin-session-id', session['sessionId']);
               this.router.navigate(['../admin'], { relativeTo: this.route });
             }
             timer(7000).subscribe(() => {

@@ -1,8 +1,5 @@
-﻿using kw.liteblog.Controllers.ApiModels;
-using kw.liteblog.Database;
+﻿using kw.liteblog.Database;
 using kw.liteblog.Models;
-using kw.liteblog.Service;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace net.Controllers;
@@ -15,7 +12,7 @@ public class AppConfigController(ILogger<AdministrationController> logger) : Con
     private readonly ILogger<AdministrationController> _logger = logger;
     private readonly IDataExtractor<AppConfig,string,DatabaseResponse> _configExtractor = new ConfigurationExtractor("Data Source=app.db");
 
-    [HttpPost]
+    [HttpGet]
     [Route("{configName}")]
     public IActionResult GetAppConfig([FromRoute] string configName)
     {

@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Blog } from '../models/blog.model';
 import { Observable } from 'rxjs';
 import { SessionRequest } from '../models/session-request.model';
-import { SessionCheckRequest } from '../models/session-check-request.model';
+import { AdminSession } from '../models/admin.session';
 
 @Injectable()
 export class AdminService {
@@ -12,11 +12,11 @@ export class AdminService {
     @Inject('BASE_URL') private baseUrl: string
   ) {}
 
-  getAdminSession(key: string): Observable<string> {
+  getAdminSession(key: string): Observable<AdminSession> {
     const request: SessionRequest = {
       key: btoa(key),
     };
-    return this.http.post<string>(
+    return this.http.post<AdminSession>(
       this.baseUrl + 'api/admin/session/create',
       request
     );

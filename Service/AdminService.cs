@@ -36,6 +36,7 @@ public class AdminService(
 
     public AdminSession EstablishAdminSession(string password)
     {
+        //todo move to db?
         var encKey = _config["SESSION_KEY"];
         if (encKey is not null)
         {
