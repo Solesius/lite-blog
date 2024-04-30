@@ -6,19 +6,17 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
-export class HomeComponent  implements OnInit{
-
-  blogs : Array<Blog> = []
-  constructor(private blogService: BlogService, private sanitizer: DomSanitizer) {}
+export class HomeComponent implements OnInit {
+  blogs: Array<Blog> = [];
+  constructor(private blogService: BlogService) {}
 
   ngOnInit(): void {
-  
     this.blogService.getBlogs().subscribe({
-      next : (blogs) => {
-        this.blogs = blogs
-      }
-    })
+      next: (blogs) => {
+        this.blogs = blogs;
+      },
+    });
   }
 }

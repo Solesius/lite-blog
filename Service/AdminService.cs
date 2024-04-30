@@ -20,12 +20,12 @@ public class AdminService(
         var encKey = _config["SESSION_KEY"];
         if (encKey is not null)
         {
-            var pass = CreateKeyHash(password, encKey);
+            var pass = CreateKeyHash(Encoding.UTF8.GetString(Convert.FromBase64String(password)), encKey);
 
             var current = _adminExtractor.ExtractOne("admin");
             if (current is not null)
             {
-                if (current.Key is not null && current.Key.Equals(CreateKeyHash(oldPassword, encKey)))
+                if (current.Key is not null && current.Key.Equals(CreateKeyHash(Encoding.UTF8.GetString(Convert.FromBase64String(oldPassword)), encKey)))
                 {
                     var update = new BlogAdmin { Key = pass };
                     _adminExtractor.UpdateOne(update);
@@ -38,7 +38,7 @@ public class AdminService(
     {
         //todo move to db?
         var encKey = _config["SESSION_KEY"];
-        if (encKey is not null)
+        if (encKey is not null && !string.IsNullOrEmpty(password))
         {
             var blogAdmin = _adminExtractor.ExtractOne("admin");
             if (blogAdmin is not null)

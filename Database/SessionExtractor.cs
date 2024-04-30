@@ -33,8 +33,7 @@ public class SessionExtractor(string dbPath) : IDataExtractor<AdminSession, stri
         return new DatabaseResponse { };
     }
 
-
-    public AdminSession? ExtractOne(string valueKey)
+    public AdminSession? ExtractOne(string sessionId)
     {
         using (var connection = new SQLiteConnection(_dbPath))
         {
@@ -51,7 +50,7 @@ public class SessionExtractor(string dbPath) : IDataExtractor<AdminSession, stri
             using (var command = new SQLiteCommand(connection))
             {
                 command.CommandText = sql;
-                command.Parameters.AddWithValue(":sessionId", valueKey);
+                command.Parameters.AddWithValue(":sessionId", sessionId);
 
                 using (var reader = command.ExecuteReader())
                 {

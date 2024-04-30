@@ -32,7 +32,7 @@ export class LoginComponent {
               this.router.navigate(['../admin'], { relativeTo: this.route });
             }
             timer(7000).subscribe(() => {
-              this.loginForm.enable(); // re-enable the form after 7 seconds
+              this.loginForm.enable();
             });
           },
           error: () => {

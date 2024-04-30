@@ -8,7 +8,7 @@ public class ConfigurationExtractor(string dbPath) : IDataExtractor<AppConfig, s
 {
     private readonly string _dbPath = dbPath;
     public List<AppConfig> ExtractMany() => [];
-    public AppConfig? ExtractOne(string username)
+    public AppConfig? ExtractOne(string configKey)
     {
         using (var connection = new SQLiteConnection(_dbPath))
         {
@@ -19,12 +19,13 @@ public class ConfigurationExtractor(string dbPath) : IDataExtractor<AppConfig, s
                     CONFIG_VALUE
 
                 FROM app_config
+                WHERE CONFIG_KEY = :configKey
             ";
 
             using (var command = new SQLiteCommand(connection))
             {
                 command.CommandText = sql;
-                command.Parameters.AddWithValue(":configId", username);
+                command.Parameters.AddWithValue(":configKey", configKey);
 
                 using (var reader = command.ExecuteReader())
                 {

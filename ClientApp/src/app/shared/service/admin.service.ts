@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Blog } from '../models/blog.model';
 import { Observable } from 'rxjs';
 import { SessionRequest } from '../models/session-request.model';
-import { AdminSession } from '../models/admin.session';
+import { AdminSession } from '../models/admin-session';
 
 @Injectable()
 export class AdminService {
@@ -29,21 +29,15 @@ export class AdminService {
     );
   }
 
-  createNewBlog(blog: Blog) : Observable<Blog> {
-    return this.http.post<Blog>(
-      this.baseUrl + 'api/blog/create',
-      blog
-    );
+  createNewBlog(blog: Blog): Observable<Blog> {
+    return this.http.post<Blog>(this.baseUrl + 'api/blog/create', blog);
   }
 
-  updateBlog(blog: Blog) : Observable<Blog> {
-    return this.http.post<Blog>(
-      this.baseUrl + 'api/blog/update',
-      blog
-    );
+  updateBlog(blog: Blog): Observable<Blog> {
+    return this.http.post<Blog>(this.baseUrl + 'api/blog/update', blog);
   }
-  
-  deleteBlog(blogId: number) : Observable<void> {
-    return this.http.delete<void>( this.baseUrl + 'api/blog/delete/' + blogId );
+
+  deleteBlog(blogId: number): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + 'api/blog/delete/' + blogId);
   }
 }
