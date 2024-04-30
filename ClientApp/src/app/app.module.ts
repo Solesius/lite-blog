@@ -17,8 +17,8 @@ import { AdminService } from './shared/service/admin.service';
 import { LoginComponent } from './blog-admin/login.component';
 import { NotFoundComponent } from './not-found-component';
 import { BlogViewComponent } from './blog-view/blog-view.component';
-import { AuthInterceptor } from './shared/service/interceptors';
-import { AdminstratorAuthGuard } from './shared/auth-guard';
+import { AuthInterceptor } from './shared/auth-interceptor';
+import { AdministratorAuthGuard } from './shared/auth-guard';
 
 @NgModule({
   declarations: [
@@ -47,22 +47,22 @@ import { AdminstratorAuthGuard } from './shared/auth-guard';
       {
         path: 'admin',
         component: BlogAdministrationComponent,
-        canActivate: [() => inject(AdminstratorAuthGuard).canActivate()],
+        canActivate: [() => inject(AdministratorAuthGuard).canActivate()],
       },
       {
         path: 'admin/blog/edit/:blogId',
         component: BlogEditorComponent,
-        canActivate: [() => inject(AdminstratorAuthGuard).canActivate()],
+        canActivate: [() => inject(AdministratorAuthGuard).canActivate()],
       },
       {
         path: 'admin/blog/add',
         component: BlogEditorComponent,
-        canActivate: [() => inject(AdminstratorAuthGuard).canActivate()],
+        canActivate: [() => inject(AdministratorAuthGuard).canActivate()],
       },
       {
         path: 'login',
         component: LoginComponent,
-        canActivate: [() => inject(AdminstratorAuthGuard).canActivate()],
+        canActivate: [() => inject(AdministratorAuthGuard).canActivate()],
       },
       { path: '**', component: NotFoundComponent },
     ]),
@@ -70,7 +70,7 @@ import { AdminstratorAuthGuard } from './shared/auth-guard';
   providers: [
     BlogService,
     AdminService,
-    AdminstratorAuthGuard,
+    AdministratorAuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
