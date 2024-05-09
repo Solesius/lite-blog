@@ -28,6 +28,9 @@ export class BlogViewComponent implements OnInit {
       next: (routeParams) => {
         const blogId = routeParams.get('blogId');
         if (blogId) {
+          if (!Number(blogId)) {
+            this.router.navigate(['not-found']);
+          }
           this.blogService.getBlog(+blogId).subscribe({
             next: (blog) => {
               if (!blog || blog == null) {

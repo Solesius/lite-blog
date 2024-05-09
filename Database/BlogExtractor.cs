@@ -20,7 +20,6 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
                     TITLE,
                     POST_DATE,
                     SUMMARY,
-                    BODY,
                     COALESCE(PINNED,0)
 
                 FROM BLOG
@@ -135,8 +134,7 @@ public class BlogExtractor(string dbPath) : IDataExtractor<Blog, int, Blog?>
                 Title = reader.GetString(1),
                 PostDate = DateTimeOffset.FromUnixTimeSeconds(reader.GetInt64(2)).ToLocalTime().LocalDateTime,
                 Summary = reader.GetString(3),
-                Body = reader.GetString(4),
-                IsPinned = reader.GetInt32(5) > 0
+                IsPinned = reader.GetInt32(4) > 0
             };
 
             blogs.Add(blog);
